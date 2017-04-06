@@ -1,6 +1,11 @@
 # echolink
 Files used to enable Echolink on the SJCARS 2M repeater using a Raspberry Pi & UDRC.
 
+## Attribution
+
+* Corky Searls AF4PM
+  * with help from Ken Koster N7IPB & Basil Gunn N7NIX
+
 ## Files
 
 These files are found in /etc/svxlink
