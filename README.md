@@ -8,12 +8,12 @@ Files used to enable Echolink on the SJCARS 2M repeater using a Raspberry Pi & U
 
 ## Files
 
-These files are found in /etc/svxlink
+These config files are found in /etc/svxlink
 
 * svxlink.conf
 * gpio.con
 
-This file is found in /etc/svxlink/svxlink.d
+This config file is found in /etc/svxlink/svxlink.d
 
 * ModuleEchoLink.conf
 
