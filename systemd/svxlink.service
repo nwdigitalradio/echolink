@@ -1,0 +1,17 @@
+[Unit]
+Description=SvxLink Echolink
+Requires=svxlink_gpio_setup.service
+After=network.target remote-fs.target syslog.target time.target
+After=svxlink_gpio_setup.service
+
+[Service]
+#EnvironmentFile=/etc/default/svxlink
+PIDFile=/run/svxlink.pid
+ExecStartPre=-/bin/touch /var/log/svxlink.log
+ExecStart=/bin/sh -c '/usr/bin/svxlink --logfile=/var/log/svxlink.log --pidfile=/run/svxlink.pid'
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target

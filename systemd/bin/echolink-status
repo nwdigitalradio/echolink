@@ -1,0 +1,20 @@
+#! /bin/bash
+#
+echo "== failed & loaded but inactive units=="
+systemctl --failed --all
+echo
+pidof svxlink > /dev/null 2>&1
+if [ $? -ne 0 ] ; then
+   echo "== svxlink NOT RUNNING =="
+else
+   echo "== svxlink running with pid $(pidof svxlink) =="
+fi
+echo
+echo "== status gpio service =="
+systemctl is-enabled svxlink_gpio_setup.service
+systemctl status svxlink_gpio_setup.service
+echo
+echo "== status svxlink service =="
+systemctl is-enabled svxlink.service
+systemctl status svxlink.service
+echo

@@ -1,0 +1,12 @@
+[Unit]
+Description=SvxLink Echolink GPIO setup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/svxlink_gpio_up
+ExecStop=/usr/sbin/svxlink_gpio_down
+TimeoutStartSec=60
+RemainAfterExit=True
+
+[Install]
+WantedBy=multi-user.target
