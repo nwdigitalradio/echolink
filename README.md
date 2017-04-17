@@ -28,7 +28,7 @@ This config file is found in /etc/svxlink/svxlink.d
 ## To use systemd start up files
 * After cloning repository
 ```
-https://github.com/nwdigitalradio/echolink.git
+git clone https://github.com/nwdigitalradio/echolink.git
 ```
 
 * As root:
