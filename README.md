@@ -11,7 +11,7 @@ Files used to enable Echolink on the SJCARS 2M repeater using a Raspberry Pi & U
 These config files are found in /etc/svxlink
 
 * svxlink.conf
-* gpio.con
+* gpio.conf
 
 This config file is found in /etc/svxlink/svxlink.d
 
@@ -19,14 +19,90 @@ This config file is found in /etc/svxlink/svxlink.d
 
 ## Configuration Notes
 
+* Configuration files live here: /etc/svxlink/
 * I found the [svxlink wiki InstallSrcHwRpi](https://github.com/sm0svx/svxlink/wiki/InstallSrcHwRpi) entries helpful.
   * Scroll down to __Problems (and fixes) along the way__ section
 * The last variable changed to enable working on repeater was RGR_SOUND_DELAY=-1 in the [SimplexLogic] section of svxlink.conf
   * RGR_SOUND_DELAY=50 -> -1
 
+## To use systemd start up files
+* After cloning repository
+```
+https://github.com/nwdigitalradio/echolink.git
+```
 
+* As root:
+  * Copy systemd files to /etc/systemd/system
+
+```
+sudo su
+cp ~/echolink/systemd/* /etc/systemd/system/
+```
+
+* As root:
+  * Enable systemd files
+
+```
+systemctl enable svxlink_gpio_setup.service
+systemctl enable svxlink.service
+```
+## To Check Status, Start & Stop echolink
+* There are 3 files in ~/echolink/systemd/bin
+  * echolink-start
+  * echolink-stop
+  * echolink-status
+* You don't need to be root to run echolink-status but **DO** need to be root to run echolink-start & echolink-stop.
+* Once the 2 systemctl enable commands are run (see above), echolink will start automatically from boot.
+
+## Logfile
+
+* To watch the log file
+```
+tail -f /var/log/svxlink.log
+```
+
+* To check all stations that tried to login
+```
+grep -i "station " /varlog/svxlink.log
+```
+* To check number of times Echolink IDed.
+```
+grep -i "sending" /var/log/svxlink.log
+```
+### log file rotate
+* Added this file /etc/rsyslog.d/01-svxlink.conf
+```
+if $programname == 'svxlink' then /var/log/svxlink.log
+if $programname == 'svxlink' then ~
+```
+
+* Added this file /etc/logrotate.d/svxlink
+```
+/var/log/svxlink.log {
+	rotate 7
+	daily
+	missingok
+	notifempty
+	delaycompress
+	compress
+	postrotate
+		invoke-rc.d rsyslog rotate > /dev/null
+	endscript
+}
+```
+
+#### Tested log file rotate
+```
+service rsyslog restart
+echo "test log rotate for svxlink, view status before ..."
+
+grep svxlink /var/lib/logrotate/status
+logrotate -v -f /etc/logrotate.d/svxlink
+
+echo "test log rotate, view status after ..."
+grep svxlink /var/lib/logrotate/status
+```
 ## Notes from Ken Koster N7IPB
-
 
 ### Modify your svxlink.conf: (this was the main issue)
 1. Change Logics=RepeaterLogic to Logics=SimplexLogic
