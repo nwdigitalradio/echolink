@@ -1,0 +1,41 @@
+diff ModuleEchoLink.conf  orig/ModuleEchoLink.conf
+5c5
+< ALLOW_IP=172.16.1.0/24
+---
+> #ALLOW_IP=192.168.1.0/24
+8c8
+< ACCEPT_INCOMING=^(AF4PM|N7NIX|K7UDR|KU7M|WA7FUS|N4RVE|K7NHE|KC7WJJ|K9QJS)$
+---
+> #ACCEPT_INCOMING=^(.*)$
+10c10,11
+< ACCEPT_OUTGOING=^(AF4PM|N7NIX|K7UDR|KU7M|WA7FUS|N4RVE|K7NHE|KC7WJJ|K9QJS)$
+---
+> #ACCEPT_OUTGOING=^(.*)$
+> #REJECT_CONF=0
+13,16c14,17
+< CALLSIGN=AF4PM-R
+< PASSWORD=password
+< SYSOPNAME=Corky Searls
+< LOCATION=[Svx] 146.700, Lopez Island
+---
+> CALLSIGN=MYCALL-L
+> PASSWORD=MyPass
+> SYSOPNAME=MyName
+> LOCATION=[Svx] Fq, MyTown
+19a21
+> #BIND_ADDR=10.20.30.40
+26c28,29
+< DEFAULT_LANG=en_US
+---
+> #DEFAULT_LANG=en_US
+> #COMMAND_PTY=/dev/shm/echolink_ctrl
+32,34c35,37
+< 	    "QTH:     Lopez Island\n"
+< 	    "QRG:     Link on 146.700 MHz\n"
+< 	    "CTCSS:   131.8 Hz\n"
+---
+> 	    "QTH:     My_QTH\n"
+> 	    "QRG:     Simplex link on ???.??? MHz\n"
+> 	    "CTCSS:   My_CTCSS_fq_if_any Hz\n"
+36a40
+>

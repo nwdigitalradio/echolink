@@ -1,0 +1,19 @@
+diff gpio.conf orig/gpio.conf
+6a7,10
+> # GPIO system pin path
+> # RPi/odroid/nanopi/pine64 = /sys/class/gpio, orangpi = /sys/class/gpio_sw
+> GPIO_PATH=/sys/class/gpio
+>
+9c13
+< GPIO_IN_HIGH="gpio27"
+---
+> GPIO_IN_HIGH=""
+17c21
+< GPIO_OUT_HIGH="gpio12 gpio23"
+---
+> GPIO_OUT_HIGH=""
+27c31
+< GPIO_GROUP="svxlink"
+---
+> GPIO_GROUP="daemon"
+
