@@ -112,9 +112,9 @@ make doc
 make install
 ldconfig
 ```
-This will build SvxLink and install it under /usr/local. The first cmake argument specifies the source directory so the build directory can be created anywhere. A common pattern is to place the build directly under the top source code directory, hence the ".." in the example above.
+This will build SvxLink and install it under _/usr/local_. The first cmake argument specifies the source directory so the build directory can be created anywhere. A common pattern is to place the build directly under the top source code directory, hence the ".." in the example above.
 
-To use another install location (e.g. /opt/svxlink) use the following line when running cmake:
+To use another install location (e.g. _/opt/svxlink_) use the following line when running cmake:
 ```bash
 cmake -DCMAKE_INSTALL_PREFIX=/opt/svxlink ..
 ```
@@ -152,7 +152,7 @@ sudo make install
 ldconfig
 ```
 
-* **Note:** This was supposed to place the executables in the /usr/lib/svxlink directory. Instead it placed the info in the /usr/lib/arm-linux-gnueabihf/svxlink directory. This will need to get fixed in the future as svxlink looks for the module executables in the original location.
+* **Note:** This was supposed to place the executables in the _/usr/lib/svxlink_ directory. Instead it placed the info in the _/usr/lib/arm-linux-gnueabihf/svxlink_ directory. This will need to get fixed in the future as svxlink looks for the module executables in the original location.
   * As a quick fix to test and also keep moving I did this part manually:
 
 ```bash
@@ -162,13 +162,18 @@ cp -r /usr/lib/arm-linux-gnueabihf/svxlink/*.* /usr/lib/svxlink/)
 ### Modify the following configuration files from defaults to support the PI3/UDRC-II
 
 * Configure [/etc/svxlink/svxlink.conf](https://github.com/nwdigitalradio/echolink/blob/master/svxlink.conf)
+  * [Diff from original svxlink.conf file](https://github.com/nwdigitalradio/echolink/blob/master/svxlink.conf.diff)
 
 * Configure [/etc/svxlink/svxlink.d/ModuleEchoLink.conf](https://github.com/nwdigitalradio/echolink/blob/master/ModuleEchoLink.conf)
+  * [Diff from orginal ModuleEchoLink.conf file](https://github.com/nwdigitalradio/echolink/blob/master/ModuleEchoLink.conf.diff)
 
 * Configure [/etc/svxlink/gpio.conf](https://github.com/nwdigitalradio/echolink/blob/master/gpio.conf)
+  * [Diff from original gpio.conf file](https://github.com/nwdigitalradio/echolink/blob/master/gpio.conf.diff)
 
-* With all configuration files set up as above we are now ready to connect the radio and run the system.
-  * **Note:** the password in ModuleEchoLink.conf must match the EchoLink callsign used
+* With all configuration files set up as above we are now ready to
+connect the radio and run the system.
+  * **Note:** the password in _ModuleEchoLink.conf_ must match the
+  EchoLink callsign used.
 
 ```bash
 sudo svxlink_gpio_up
@@ -182,12 +187,40 @@ svxlink
 ```
 
 ### Operation and Use
-The last item, once this is running, is to adjust the output sound levels using alsamixer. Typically the PCM will be set to -28 db or so and the gain will be set at 0. When running alsamixer, select the UDRC using <f-6> and then select UDRC from the list. The actual settings will depend on the radio.
 
-Also, as configured, the system will allow a direct connection from the local network. This works well as a test setup using one radio in "reverse" mode and the svxlink radio in repeater mode. Once this testing validates that communications are working both directions - from the Echolink node to the radio and from an RF link to the radio back into the Echolink node - then it is time to move to live testing on the repeater.
+The last item, once this is running, is to adjust the output sound
+levels using alsamixer. Typically the PCM will be set to -28 db or so
+and the gain will be set at 0. When running alsamixer, select the UDRC
+using _`<f-6>`_ and then select UDRC from the list. The actual settings
+will depend on the radio.
 
-The original configuration used RepeaterLogic as this is controlling a repeater. According to Echolink protocol, when using repeaters the callsign is CALL-R (i.e., AF4PM-R) and I assumed from all the discussion that this also applied to the RepeaterLogic section. As it turns out this is for direct repeater control and results in the ability to send audio out over RF via the Echolink node and svxlink-connected radio, but no audio gets back from in-coming RF connections. This was pointed out by Ken Koster and is also can be found in the svxlink wiki (though somewhat challenging to find). Once the change was made to use SimplexLogic for a radio talking to a repeater (vs direct repeater control) all worked well in both directions.
+Also, as configured, the system will allow a direct connection from
+the local network. This works well as a test setup using one radio in
+"reverse" mode and the svxlink radio in repeater mode. Once this
+testing validates that communications are working both directions -
+from the Echolink node to the radio and from an RF link to the radio
+back into the Echolink node - then it is time to move to live testing
+on the repeater.
 
-The other item was that we needed to disable the "Roger Beep" as this put the radio in an infinite beep loop. It is not clear exactly what was happening but the beep was being repeated as with each beep it issued another beep to "Roger" the previous beep. The only way to shut it down was to turn off the radio or bring down svxlink with <Cntl-C>. Disabling the RogerSound stopped this problem from occuring.
+The original configuration used RepeaterLogic as this is controlling a
+repeater. According to Echolink protocol, when using repeaters the
+callsign is CALL-R (i.e., AF4PM-R) and I assumed from all the
+discussion that this also applied to the RepeaterLogic section. As it
+turns out this is for direct repeater control and results in the
+ability to send audio out over RF via the Echolink node and
+svxlink-connected radio, but no audio gets back from in-coming RF
+connections. This was pointed out by Ken Koster and is also can be
+found in the svxlink wiki (though somewhat challenging to find). Once
+the change was made to use SimplexLogic for a radio talking to a
+repeater (vs direct repeater control) all worked well in both
+directions.
+
+The other item was that we needed to disable the "Roger Beep" as this
+put the radio in an infinite beep loop. It is not clear exactly what
+was happening but the beep was being repeated as with each beep it
+issued another beep to "Roger" the previous beep. The only way to shut
+it down was to turn off the radio or bring down svxlink with
+_`<Cntl-C>`_.  Disabling the RogerSound stopped this problem from
+occuring.
 
 ## Echolink Presentations from SJCARS April meeting
