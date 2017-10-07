@@ -137,3 +137,21 @@ In [TX1] you will want to play with the TX_DELAY to match the radio.   I
 notice you have it at 500 and that guarantees that the radio is up and
 transmitting when the announcements occur but you may find it adds a bit to
 much delay in the audio.
+
+### Problem geting svxlink to work from boot
+```
+*** WARNING: Could not look up host "servers.echolink.org": Temporary failure in name resolution
+```
+* From https://wiki.archlinux.org/index.php/systemd-networkd
+
+###### Required services and setup
+
+* In order to use systemd-networkd, start/enable both systemd-networkd.service and systemd-resolved.service.
+
+* Tip: systemd-resolved is required only if you are specifying DNS entries in .network files or if you want to obtain DNS addresses from the network DHCP client.
+* Alternatively you may manually manage /etc/resolv.conf.
+  * For compatibility with resolv.conf, delete or rename the existing file and create the following symbolic link when using systemd-resolved:
+
+```
+ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+```
