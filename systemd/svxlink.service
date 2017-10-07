@@ -1,13 +1,22 @@
 [Unit]
 Description=SvxLink Echolink
 Requires=svxlink_gpio_setup.service
-After=network.target remote-fs.target syslog.target time.target
+After=remote-fs.target syslog.target time.target
 After=svxlink_gpio_setup.service
+#After=systemd-networkd-wait-online.service
+#After=sys-subsystem-net-devices-eth0.device
+#After=systemd-resolved.service
+After=network-online.target
+Wants=network-online.target
 
+# prefix the ExecStart path with a minus
+# - the exit status is ignored
+# - the service should end up with status exited.
 [Service]
 #EnvironmentFile=/etc/default/svxlink
 PIDFile=/run/svxlink.pid
 ExecStartPre=-/bin/touch /var/log/svxlink.log
+ExecStartPre=/bin/bash -c '/usr/local/bin/set-udrc-echolink.sh'
 ExecStart=/bin/sh -c '/usr/bin/svxlink --logfile=/var/log/svxlink.log --pidfile=/run/svxlink.pid'
 ExecReload=/bin/kill -s HUP $MAINPID
 Restart=on-failure
