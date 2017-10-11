@@ -14,9 +14,7 @@ if [ -n "$retcode" ] ; then
 else
    systemctl start svxlink_gpio_setup.service
    echo "$scriptname: svxlink_gpio_setup service started."
-
 fi
-
 
 pid=$(pidof svxlink)
 if [ $? -eq 0 ] ; then
