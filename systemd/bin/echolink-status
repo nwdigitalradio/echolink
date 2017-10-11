@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-echo "== failed & loaded but inactive units=="
+echo "== failed & loaded but inactive service units =="
 systemctl --failed --all
 echo
 pidof svxlink > /dev/null 2>&1
