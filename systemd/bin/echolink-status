@@ -9,6 +9,11 @@ if [ $? -ne 0 ] ; then
 else
    echo "== svxlink running with pid $(pidof svxlink) =="
 fi
+retcode=$(systemctl | grep -i svxlink_gpio_setup)
+if [ -z "$retcode" ] ; then
+   echo "== svxlink_gpio_setup NOT RUNNING"
+fi
+
 echo
 echo "== status gpio service =="
 systemctl is-enabled svxlink_gpio_setup.service
