@@ -223,4 +223,18 @@ it down was to turn off the radio or bring down svxlink with
 _`<Cntl-C>`_.  Disabling the RogerSound stopped this problem from
 occuring.
 
+##### Startup, Status & Shutdown
+
+On startup Echolink sometimes is unable to find an EchoLink station
+directory using Internet services. Some systemd prerequisite is not
+being met. If that happens stop then start svxlink. To facilitate
+stopping/starting svxlink the local bin directory should contain these
+scripts:
+
+```
+echolink-stop
+echolink-start
+echolink-status
+```
+
 ## Echolink Presentations from SJCARS April meeting
