@@ -8,7 +8,21 @@ if [[ $EUID != 0 ]] ; then
    exit 1
 fi
 
-systemctl start svxlink_gpio_setup.service
-systemctl start svxlink.service
+retcode=$(systemctl | grep -i svxlink_gpio_setup)
+if [ -n "$retcode" ] ; then
+   echo "svxlink_gpio_setup is ALREADY running"
+else
+   systemctl start svxlink_gpio_setup.service
+   echo "$scriptname: svxlink_gpio_setup service started."
 
-echo "$scriptname: svxlink_gpio_setup & svxlink services started."
+fi
+
+
+pid=$(pidof svxlink)
+if [ $? -eq 0 ] ; then
+   echo "svxlink is ALREADY running, with a pid of $pid"
+else
+   systemctl start svxlink.service
+   echo "$scriptname: svxlink service started."
+fi
+
