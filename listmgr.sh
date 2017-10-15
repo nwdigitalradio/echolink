@@ -34,8 +34,10 @@ fi
 # ===== function add_callsign()
 
 function add_callsign() {
+
 # Make all alpha chars upper case
 callsign=$(echo "$1" | tr '/a-z/' '/A-Z/')
+echo "Adding callsign: $callsign"
 
 # check if callsign is all ready in the incoming list
 incoming=$(grep "^ACCEPT_INCOMING" "$CFG_DIR/$CFG_FILE")
@@ -49,6 +51,7 @@ else
    echo "Adding callsign: $callsign to incoming list"
    sed -i -e "/ACCEPT_INCOMING/ s/)/|$callsign)/" "$CFG_DIR/$CFG_FILE"
 fi
+
 # check if it's all ready in the outgoing list
 outgoing=$(grep "^ACCEPT_OUTGOING" "$CFG_DIR/$CFG_FILE")
 
@@ -67,11 +70,10 @@ fi
 # ===== function remove_callsign()
 
 function remove_callsign() {
-echo "Removing callsign: $1"
-echo "$VERSION" | sed 's/\.//g'
 
 # Make all alpha chars upper case
 callsign=$(echo "$1" | tr '/a-z/' '/A-Z/')
+echo "Removing callsign: $callsign"
 
 # check if callsign is NOT in the incoming list
 incoming=$(grep "^ACCEPT_INCOMING" "$CFG_DIR/$CFG_FILE")
@@ -85,6 +87,7 @@ else
    # Add callsign to list
    echo "Callsign: $callsign is NOT in incoming list"
 fi
+
 # check if it's all ready in the outgoing list
 outgoing=$(grep "^ACCEPT_OUTGOING" "$CFG_DIR/$CFG_FILE")
 
