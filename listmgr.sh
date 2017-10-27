@@ -134,7 +134,8 @@ for (( i=0; i<=$num_calls; i++ )) ; do
          exit
       fi
    done
-   echo "White List: $accept_list_in"
+# Debug only
+#   echo "White List: $accept_list_in"
 }
 
 # ===== main
