@@ -9,7 +9,7 @@
 * The EchoLink RPi comes configured with DHCP
 * Find the IP address assigned either by looking in your Routers DHCP assignment table or:
   * Use the following command
-  * nmap -p <unique_ssh_port> --open -sV <local_net_first_3_octets>.* -Pn
+  * ```nmap -p <unique_ssh_port> --open -sV <local_net_first_3_octets>.* -Pn```
 * For example
 
 ```
