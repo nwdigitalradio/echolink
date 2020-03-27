@@ -9,11 +9,11 @@
 * The EchoLink RPi comes configured with DHCP
 * Find the IP address assigned either by looking in your Routers DHCP assignment table or:
   * Use the following command
-  * nmap -p 57329 --open -sV <local_net_first_3_octets>.* -Pn
+  * nmap -p <unique_ssh_port> --open -sV <local_net_first_3_octets>.* -Pn
 * For example
 
 ```
-nmap -p 57329 --open -sV 10.0.42.* -Pn
+nmap -p <unique_ssh_port> --open -sV 10.0.42.* -Pn
 ```
 * Output looks like this:
 ```
@@ -40,13 +40,13 @@ EchoLink3	Port-Remap	5200	5200	TCP	eth0.v1530	<RPi_IP_addr>	5200
 
 * Require IP address of RPi unit
 * ssh port changed from default in file: /etc/ssh/sshd_config
-  * Port 57329
+  * Port <unique_ssh_port>
 
 ```
-                                Port    Port                                           Private
-Name     Type           start   end     Protocol       NAT Interface    Private IP      Port
+                      Port               Port                                           Private
+Name     Type         start              end            Protocol       NAT Interface    Private IP      Port
 
-ssh    Port-Remap	57329	57329	TCP or UDP	eth0.v1530     <RPi_IP_addr>	573329
+ssh    Port-Remap <unique_ssh_port> <unique_ssh_port>	TCP or UDP	eth0.v1530     <RPi_IP_addr> <unique_ssh_port>
 ```
 ### Quick Check
 * Things to check to see if RPi running EchoLink is working
