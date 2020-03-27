@@ -2,9 +2,13 @@
 
 The installation process generally follows the R-Pi installation instructions on [Github here](https://github.com/sm0svx/svxlink/wiki/InstallSrcHwRpi)
 
-**Note:** Follow the Compass build instructions and not the basic build instructions provided at the above link. (i.e., Do not run rpi-update, it is not necessary for the Compass image and will remove the UDRC firmware support)
+#### Links to other notes
+* [NOTES](NOTES.md)
+* [RPi move notes](MOVE.md)
 
 ## Build Compass Image
+
+__NOTE: Compass Image is deprecated, do not do this__
 
 ###### [Install Compass Linux](https://nw-digital-radio.groups.io/g/compass/wiki/Installing-Compass-Linux-for-Raspberry-Pi)
 
@@ -86,14 +90,14 @@ sudo apt-get install libqt4-dev rtl-sdr
 ```bash
 git clone https://github.com/sm0svx/svxlink.git
 ```
-* Download and unpack the Sounds for the system to use from [this location](https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/download/14.08/svxlink-sounds-en_US-heather-16k-13.12.tar.bz2)
+* Download and unpack the Sounds for the system to use from [this location](https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/tag/19.09/svxlink-sounds-en_US-heather-16k-19.09.tar.bz2)
 * Unpack the sounds. **Note** that these must end up in the directory pointed to in the [ModuleEchoLink.conf file](https://github.com/nwdigitalradio/echolink/blob/master/ModuleEchoLink.conf).
     * Specifically line 28 DEFAULT_LANG=en_US.
     * This means the sounds must reside in the /usr/share/svxlink/sounds/en_US directory
 
 ```bash
 cd /usr/share/svxlink/sounds/en_US
-tar -zxvf svxlink-sounds-en_US-heather-16k-13.12.tar.bz2
+tar -xjvf svxlink-sounds-en_US-heather-16k-19.09.tar.bz2
 ```
 ### Build and install
 
