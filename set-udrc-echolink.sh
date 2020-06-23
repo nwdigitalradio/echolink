@@ -1,7 +1,9 @@
 #!/bin/bash
 #
-# This sets the alsamixer for a Kenwood TM-V71a
+# This sets ALSA sound card config for a svxlink/echolink
 
+scriptname="`basename $0`"
+asoundstate_file="/var/lib/alsa/asound.state"
 
 amixer -c udrc -s << EOF
 # Set input and output levels for a TM-V71a
@@ -66,4 +68,19 @@ sset 'LOL Output Mixer L_DAC' on
 #  Turn on TONEIN
 sset 'LOR Output Mixer R_DAC' on
 EOF
-alsactl store
+
+stateowner=$(stat -c %U $asoundstate_file)
+if [ $? -ne 0 ] ; then
+   "$scriptname: Command 'alsactl store' will not work, file: $asoundstate_file does not exist"
+   exit
+fi
+
+ALSACTL="alsactl"
+if [[ $EUID != 0 ]] ; then
+   ALSACTL="sudo alsactl"
+fi
+
+$ALSACTL store
+if [ "$?" -ne 0 ] ; then
+    echo "ALSA mixer settings NOT stored."
+fi
