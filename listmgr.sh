@@ -157,6 +157,7 @@ key="$1"
 
 case $key in
    -a|--add)
+      rootcheck
       callsign="$2"
       shift # past argument
       if [ -z "$callsign" ] ; then
@@ -170,6 +171,7 @@ case $key in
    ;;
 
    -d|-r|--delete)
+      rootcheck
       callsign="$2"
       shift # past argument
       if [ -z "$callsign" ] ; then
