@@ -227,6 +227,50 @@ it down was to turn off the radio or bring down svxlink with
 _`<Cntl-C>`_.  Disabling the RogerSound stopped this problem from
 occuring.
 
+#### From Ken Koster 10/22/2021
+
+Ok, the CW problems seem to be all solved.
+
+All of these new changes are in /etc/svxlink/svxlink.conf.
+
+The issue causing CW Id problems was related to the callsign set for the
+SimplexLogic.   It used a '-' and there is no such character in CW.  Removing the -R
+fixes the failure I was seeing.   I also changed the svxlink.conf file to disable the
+short voice ID and enable the short CW id.
+
+The CW id parameters where also changed to reduce the ID volume to -18db
+below it's default of -6db making the ID less intrusive.
+
+One additional change was to the SHORT_IDENT_INTERVAL.  You had it set to 60
+minutes which causes the echolink station to only ID at the top of the hour.  I
+changed it to 10 minutes so the behavior now is to ID every 10 minutes (on the
+tens) when echolink is in use and also one more time after the echolink station
+stops transmitting.
+
+You will also notice that the ID level will reduce by an additional 12db while
+someone is actively talking on echolink.  This is to keep from covering up the user
+with the ID.  This is controlled by FX_GAIN_NORMAL and FX_GAIN_LOW which you
+already had set to those values.
+
+One more thing.
+You are using the default message when someone connects to echolink.   Its a long
+message pointing to the svxlink online info and  the person connecting has to wait
+for it to finish playing before they can talk.  If you like I can provide a new messaqe
+saying whatever you like or you can create your own messages using the Google
+Text to Speech api.   Instructions on my github or if you would rather I'll create one
+for you.   Maybe something like "Welcome to N7JN echolink" or just simply "N7JN
+echolink"  or "HEY, be nice"   You get the idea.
+
+
+##### Files edited
+
+```
+/etc/svxlink/svxlink.conf
+/etc/svxlink/svxlink.d/ModuleEchoLink.conf
+/usr/share/svxlink/events.d/local/Logic.tcl
+/usr/share/svxlink/events.d/local/EchoLink.tcl
+```
+
 ##### Startup, Status & Shutdown
 
 On startup Echolink sometimes is unable to find an EchoLink station
